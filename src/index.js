@@ -1,15 +1,15 @@
-import { heroes } from './data/heroes';
+const apiKey = '5hgjVKgGB8lcOH48pkSly6Vs0CItZzIm';
 
+const request = fetch(`http://api.giphy.com/v1/gifs/random?api_key=${ apiKey }`);
 
-const getHeroeById = (id)=>{
-    return heroes.find((heroe) => heroe.id === id);
-}
+request.then( resp => resp.json())
+.then(({data}) => {
+    
+    const {url} = data.images.original;
 
-console.log(getHeroeById(2));
+    const img = document.createElement ('img');
+    img.src = url;
+    document.body.append(img);
 
-const getHeroesByOwner = (owner)=>{
-    return heroes.filter((heroe) => heroe.owner === owner);
-}
-
-console.log(getHeroesByOwner('DC'));
-
+})
+.catch(console.warn);
